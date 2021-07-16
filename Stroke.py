@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[62]:
+# In[2]:
 
 
 import streamlit as st 
@@ -9,6 +9,11 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split #This just creates a new dataset 
 from sklearn.preprocessing import MinMaxScaler
+
+#Web scraping 
+import requests 
+import urllib.request
+from bs4 import BeautifulSoup 
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -27,10 +32,37 @@ st.write("""
 # In[4]:
 
 
-model = pd.read_csv(r'C:\Users\MATILYA\Documents\Self\ML\Kaggle\Headache\Model.csv')
+url = "https://github.com/Norby08/Stroke_app-/blob/main/Model.csv"
+r = requests.get(url)
+soup = BeautifulSoup(r.text, 'html.parser')
+tb = soup.find('table', class_ = 'js-csv-data csv-data js-file-line-container')
+columns = tb.find("thead").find_all('th') #All the column names are in "th"
+columns_names = [c.string for c in columns]
+rows = tb.find("tbody").find_all("tr") #Get all the table rows 
+
+table_rows = rows 
+l = []
+for tr in table_rows:
+    td = tr.find_all('td')
+    row = [str(tr.string).strip() for tr in td]
+    l.append(row)
+    
+for i in l: #This removes the unnecassay columns 
+    del i[0] 
+    
+df = pd.DataFrame(l, columns = columns_names)
+df.drop(df.columns[[0]],axis = 1, inplace = True)
+
+model = df
 
 
-# In[63]:
+# In[3]:
+
+
+#model = pd.read_csv(r'C:\Users\MATILYA\Documents\Self\ML\Kaggle\Headache\Model.csv')
+
+
+# In[5]:
 
 
 X = model.loc[:,['gender','age','hypertension','heart_disease','avg_glucose_level','smoking_status','ever_married_Yes',
@@ -94,13 +126,13 @@ age_scale.columns = ['age_scaled']
 
 # ### Model creation
 
-# In[67]:
+# In[7]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2) #train/test split 
 
 
-# In[71]:
+# In[8]:
 
 
 #Apply Random forest 
@@ -112,7 +144,7 @@ y_train_rf_pred = rf_model.predict_proba(X_train)# keep probabilities for the po
 ytest_rf_pred = rf_model.predict_proba(X_test)
 
 
-# In[68]:
+# In[9]:
 
 
 #LogisticRegression
@@ -131,7 +163,7 @@ ytest_pred_log = log_classifier.predict_proba(X_test)
 
 # ### Stream
 
-# In[42]:
+# In[10]:
 
 
 st.sidebar.header('Parameter selesction')
@@ -169,14 +201,14 @@ user_data = user_selection()
 user_data
 
 
-# In[38]:
+# In[11]:
 
 
 smoke_check = user_data['Smoking status'][0]
 smoke_check
 
 
-# In[60]:
+# In[12]:
 
 
 X_pred = []
@@ -255,7 +287,7 @@ def one_hot_cold(user_data):
     return X_pred 
 
 
-# In[61]:
+# In[13]:
 
 
 check = one_hot_cold(user_data)
@@ -282,7 +314,7 @@ check
 #checkouput
 
 
-# In[112]:
+# In[14]:
 
 
 pred = np.array(check).reshape(1, -1)
@@ -290,7 +322,7 @@ pred = np.array(check).reshape(1, -1)
 ouput = rf_model.predict(pred)
 
 
-# In[114]:
+# In[15]:
 
 
 ouput[0]
