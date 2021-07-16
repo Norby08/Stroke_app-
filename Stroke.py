@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[6]:
 
 
 import streamlit as st 
@@ -148,11 +148,11 @@ ytest_rf_pred = rf_model.predict_proba(X_test)
 
 
 #LogisticRegression
-log_classifier=LogisticRegression()
-log_classifier.fit(X_train, y_train)
+#log_classifier=LogisticRegression()
+#log_classifier.fit(X_train, y_train)
 
-ytrain_pred_log = log_classifier.predict_proba(X_train)
-ytest_pred_log = log_classifier.predict_proba(X_test)
+#ytrain_pred_log = log_classifier.predict_proba(X_train)
+#ytest_pred_log = log_classifier.predict_proba(X_test)
 
 
 # In[ ]:
@@ -205,7 +205,7 @@ user_data
 
 
 smoke_check = user_data['Smoking status'][0]
-smoke_check
+#smoke_check
 
 
 # In[12]:
@@ -325,11 +325,14 @@ ouput = rf_model.predict(pred)
 # In[15]:
 
 
-ouput[0]
+ans = ouput[0]
 
 
 # In[ ]:
 
 
-
+if ans = 0:
+    print("No threat") 
+else: 
+    print("Threat")
 
