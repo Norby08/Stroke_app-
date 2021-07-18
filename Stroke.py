@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[8]:
 
 
 import streamlit as st 
@@ -29,7 +29,7 @@ st.write("""
 """)
 
 
-# In[4]:
+# In[9]:
 
 
 url = "https://github.com/Norby08/Stroke_app-/blob/main/Model.csv"
@@ -86,24 +86,24 @@ y = model[['stroke']]
 
 
 #Will need to scale the avg_glucose_level. 
-level = X['avg_glucose_level']
-level_glu = np.array(level).reshape(-1,1)
-scaler = MinMaxScaler()
-avg_glucose_level = scaler.fit_transform(level_glu)
-glucose_level_scale = pd.DataFrame(avg_glucose_level)
-glucose_level_scale.columns = ['glucose_level_scaled']
+#level = X['avg_glucose_level']
+#level_glu = np.array(level).reshape(-1,1)
+#scaler = MinMaxScaler()
+#avg_glucose_level = scaler.fit_transform(level_glu)
+#glucose_level_scale = pd.DataFrame(avg_glucose_level)
+#glucose_level_scale.columns = ['glucose_level_scaled']
 
 
 # In[6]:
 
 
 #Will need to scale the age.
-level_age = X['age']
-level_age_scale = np.array(level_age).reshape(-1,1)
-scaler = MinMaxScaler()
-age = scaler.fit_transform(level_age_scale)
-age_scale = pd.DataFrame(age)
-age_scale.columns = ['age_scaled']
+#level_age = X['age']
+#level_age_scale = np.array(level_age).reshape(-1,1)
+#scaler = MinMaxScaler()
+#age = scaler.fit_transform(level_age_scale)
+#age_scale = pd.DataFrame(age)
+#age_scale.columns = ['age_scaled']
 
 
 # In[8]:
@@ -121,7 +121,7 @@ age_scale.columns = ['age_scaled']
 # In[ ]:
 
 
-
+#
 
 
 # ### Model creation
@@ -136,12 +136,24 @@ X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2) #train
 
 
 #Apply Random forest 
-rf_model = RandomForestClassifier()
+rf_model = RandomForestClassifier(random_state = 0)
 #X_train = scaler.fit_transform(X_train)
 rf_model.fit(X_train,y_train)
 
 y_train_rf_pred = rf_model.predict_proba(X_train)# keep probabilities for the positive outcome only
 ytest_rf_pred = rf_model.predict_proba(X_test)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[9]:
@@ -291,7 +303,7 @@ def one_hot_cold(user_data):
 
 
 check = one_hot_cold(user_data)
-check
+#check
 
 
 # In[ ]:
@@ -326,13 +338,28 @@ ouput = rf_model.predict(pred)
 
 
 ans = ouput[0]
+ans
 
 
 # In[ ]:
 
 
-if ans = 0:
-    print("No threat") 
-else: 
-    print("Threat")
+#verdict = []
+#if ans == 1:
+#    verdict = "Threat"
+#else: 
+#    verdict = "No threat"    
+    
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
