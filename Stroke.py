@@ -25,7 +25,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 
 st.write("""
-# Stroke predicton as web
+# Stroke predicton as web application 
 """)
 
 
@@ -178,7 +178,7 @@ ytest_rf_pred = rf_model.predict_proba(X_test)
 # In[10]:
 
 
-st.sidebar.header('Parameter selesction')
+st.sidebar.header('Parameter Selection ')
 
 def user_selection():
     gender = st.sidebar.selectbox('Gender', ['Male','Female']) #Unfortunalty the data collected for this model only used binary selection
